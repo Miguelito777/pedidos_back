@@ -14,7 +14,8 @@ class TcClienteController extends Controller
     public function index()
     {
         //
-        return response()->json(TcCliente::all());
+        return response()->json(TcCliente::where('id_estado', 1)->get());
+        //return response()->json(TcCliente::all());
     }
 
     /**

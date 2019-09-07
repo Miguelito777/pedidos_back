@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\TtProducto;
 use Illuminate\Http\Request;
 
 class TtProductoController extends Controller
@@ -13,7 +13,8 @@ class TtProductoController extends Controller
      */
     public function index()
     {
-        //
+        $producto = TtProducto::with('sabor', 'tipo_producto', 'tamanio')->where('id','=',1)->get();
+        return response()->json($producto);
     }
 
     /**

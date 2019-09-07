@@ -11,4 +11,15 @@ class TcCliente extends Model
     protected $fillable = [
         'cliente'
     ];
+        /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'id_usuario_crea',
+        'id_usuario_modifica'
+    ];
 }

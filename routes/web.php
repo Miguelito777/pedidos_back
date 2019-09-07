@@ -16,7 +16,24 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
+    //TC_CLIENTES
     $router->group(['prefix' => 'clientes'], function () use ($router) {
         $router->get('',  ['uses' => 'TcClienteController@index']);
     });
+
+
+    //TC_PRODUCTO
+    $router->group(['prefix' => 'productos'], function () use ($router) {
+        $router->get('',  ['uses' => 'TtProductoController@index']);
+    });
+
+    //TC_PRODUCTO
+    $router->group(['prefix' => 'catalogo'], function () use ($router) {
+        $router->get('',  ['uses' => 'CatalogoController@index']);
+    });
+
+        //TT_PEDIDO
+        $router->group(['prefix' => 'pedidos'], function () use ($router) {
+            $router->post('',  ['uses' => 'TtPedidoController@create']);
+        });
 });
