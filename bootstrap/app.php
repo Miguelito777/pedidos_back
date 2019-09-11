@@ -48,9 +48,7 @@ $app->singleton(
     App\Console\Kernel::class
 );
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
-$app->middleware([
-    App\Http\Middleware\CorsMiddleware::class
- ]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -61,7 +59,9 @@ $app->middleware([
 | route or middleware that'll be assigned to some specific routes.
 |
 */
-
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+ ]);
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
