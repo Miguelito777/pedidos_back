@@ -13,7 +13,8 @@ class TtProducto extends Model
         'observaciones',
         'id_sabor',
         'id_tipo_producto',
-        'id_tamanio'
+        'id_tamanio',
+        'id_estado'
     ];
     public function sabor(){
         return $this->hasOne('App\TcSabor','id','id_sabor');

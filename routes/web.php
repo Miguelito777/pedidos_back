@@ -35,5 +35,6 @@ $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
         //TT_PEDIDO
         $router->group(['prefix' => 'pedidos'], function () use ($router) {
             $router->post('',  ['uses' => 'TtPedidoController@create']);
+            $router->get('',  ['uses' => 'TtPedidoController@index']);
         });
 });

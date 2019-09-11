@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 use App\TtPedido;
 use App\TtDetPedido;
 use Illuminate\Http\Request;
@@ -16,6 +17,15 @@ class TtPedidoController extends Controller
     public function index()
     {
         //
+        //$pedidos=TtPedido::with('cliente')->get();
+        /*$pedido = TtPedido::with('cliente','detPedido')->where('id_estado',1)->get();
+        foreach($pedido as $value){
+            //$value['det_pedido'];
+            foreach($value['det_pedido'] as $valueTwo){
+                //$value = 8;
+            }
+        }*/
+        return response()->json(TtPedido::with('cliente','detPedido')->where('id_estado',1)->get());
     }
 
     /**
@@ -25,33 +35,16 @@ class TtPedidoController extends Controller
      */
     public function create(Request $request)
     {
-        //
-        $pedido = $request->get('productos');
-        foreach($pedido as $key => $value)
-        {
-            $pedido[$key]->get('producto');
+        $pedido = TtPedido::create($request->all());
+        foreach ($request->productos as $i => $det) {
+            $det['id_pedido'] = $pedido->id;
+            $det['id_estado'] = 1;
+            $det['id_usuario_crea']=1;
+            $det['id_usuario_modifica']=1;
+            $det = TtDetPedido::create($det);
         }
-        //$pedido = $request->productos[0]->producto;
-    //$pedido = TtPedido::create($request->all(/*['pedido', 'fecha_entrega', 'anticipo','observaciones','id_estado','id_cliente','id_usuario_crea','id_usuario_modifica']*/));
-        //$i = 0;
-        //$prod = $request->only(['pedido');
-        //foreach ($request->productos as $i => $det) {
-            //$request->productos[$i]->cantidad = 8;
-            //$det->cantidad;
-            //$det->cantidad=8;
-            //$det->id_pedido = $pedido->id;
-            /*$det->det_pedido = $det->producto;
-            $det->observaciones = "NINGUNA";
-            $det->observaciones = "NINGUNA";
-            $det->id_estado = 1;
-            $det->id_usuario_crea = 1;
-            $det->id_usuario_modifica = 1;*/
-            //$det = TtDetPedido::create($det);
-        //}
-        //$pedido->sizee = $i;
-        //$pedido->productos = $request->productos;
+        $pedido->detalle = $request->productos;
         return response()->json($pedido, 201);
-        //return "Llego al servicio";
     }
 
     /**

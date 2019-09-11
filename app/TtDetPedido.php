@@ -19,4 +19,10 @@ class TtDetPedido extends Model
         'id_usuario_crea',
         'id_usuario_modifica'
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'id_usuario_crea',
+        'id_usuario_modifica'
+    ];
 }

@@ -28,7 +28,7 @@ class CatalogoController extends Controller
     {
         //
         $clientes = TcCliente::where('id_estado', 1)->get();
-        $productos = TtProducto::with('sabor', 'tipo_producto', 'tamanio')->where('id','=',1)->get();
+        $productos = TtProducto::with('sabor', 'tipo_producto', 'tamanio')->where('id_estado','=',1)->get();
         foreach ($productos as $i => $producto) {
             $producto->producto = $producto->producto .': '. $producto->tipo_producto->tipo_producto.' '.$producto->sabor->sabor.' '. $producto->tamanio->tamanio;
             unset($productos[$i]->sabor); 
