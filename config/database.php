@@ -55,7 +55,7 @@ return [
             'timezone' => env('DB_TIMEZONE', '+00:00'),
         ],
 
-        'pgsql' => [
+        */'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'ec2-174-129-227-128.compute-1.amazonaws.com'),
             'port' => env('DB_PORT', 5432),
@@ -66,7 +66,7 @@ return [
             'prefix' => env('DB_PREFIX', ''),
             'schema' => env('DB_SCHEMA', 'public'),
             'sslmode' => env('DB_SSL_MODE', 'prefer'),
-        ]*//*,
+        ]/*,
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
