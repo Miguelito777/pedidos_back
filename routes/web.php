@@ -38,4 +38,11 @@ $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
             $router->get('',  ['uses' => 'TtPedidoController@index']);
             $router->get('pedidoPDF/{id}',  ['uses' => 'TtPedidoController@pedidoPDF']);
         });
+
+        //TT_DIRECCION_PEDIDO
+        $router->group(['prefix' => 'direccion'], function () use ($router) {
+            $router->post('',  ['uses' => 'TtDireccionPedidoController@create']);
+            //$router->get('',  ['uses' => 'TtPedidoController@index']);
+            //$router->get('pedidoPDF/{id}',  ['uses' => 'TtPedidoController@pedidoPDF']);
+        });
 });

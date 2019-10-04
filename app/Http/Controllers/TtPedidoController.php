@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\TtPedido;
 use App\TtDetPedido;
+use App\TtDireccionPedido;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Dompdf\Dompdf;
@@ -18,15 +19,6 @@ class TtPedidoController extends Controller
      */
     public function index()
     {
-        //
-        //$pedidos=TtPedido::with('cliente')->get();
-        /*$pedido = TtPedido::with('cliente','detPedido')->where('id_estado',1)->get();
-        foreach($pedido as $value){
-            //$value['det_pedido'];
-            foreach($value['det_pedido'] as $valueTwo){
-                //$value = 8;
-            }
-        }*/
         return response()->json(TtPedido::with('cliente','detPedido')->where('id_estado',1)->get());
     }
     /**
@@ -36,7 +28,20 @@ class TtPedidoController extends Controller
      */
     public function create(Request $request)
     {
-        $pedido = TtPedido::create($request->all());
+        $pedido = $request->all();
+        if($pedido['id_direccion_pedido'] > 0){
+        }else{
+            $direccionDesc = TtDireccionPedido::where('direccion_pedido', '=', $pedido['direccion_pedido'])->get();
+            if($direccionDesc->count() == 0){
+                $direccion = array("direccion_pedido"=>$pedido['direccion_pedido'], "id_estado"=>$pedido['id_estado'],"id_usuario_crea"=>$pedido['id_usuario_crea'],"id_usuario_modifica"=>$pedido['id_usuario_modifica'],"observaciones"=>"Ninguna");
+                $element = TtDireccionPedido::create($direccion);
+                $pedido['id_direccion_pedido'] = $element->id;
+            }else{
+                $value = $direccionDesc->first();
+                $pedido['id_direccion_pedido'] = $value->id;
+            }
+        }
+        $pedido = TtPedido::create($pedido);
         foreach ($request->productos as $i => $det) {
             $det['id_pedido'] = $pedido->id;
             $det['id_estado'] = 1;
@@ -44,7 +49,7 @@ class TtPedidoController extends Controller
             $det['id_usuario_modifica']=1;
             $det = TtDetPedido::create($det);
         }
-        $pedido->detalle = $request->productos;
+        $pedido->productos = $request->productos;
         return response()->json($pedido, 201);
     }
 
@@ -86,8 +91,8 @@ class TtPedidoController extends Controller
             . '<p class="lead" style="text-align:center;"><b>PANADERIA Y PASTELERIA CAPRICE</b><br><b>Tel. 77663236</b> <br> '
             . '<b>Correo: pypcaprice28@gmail.com</b> <br> '
             . '<br> CONSTANCIA DE PEDIDO </p> <br>'
-            . '<p class="lead"><b>FECHA DE PEDIDO:</b> '.$value['created_at'].'</p>'
             . '<p class="lead"><b>NO. DE PEDIDO:</b> '.$value['id'].'</p>'
+            . '<p class="lead"><b>FECHA DE PEDIDO:</b> '.$value['created_at'].'</p>'
             . '<p class="lead"><b>CLIENTE:</b> '.$value['cliente']->cliente.'</p>'
             . '<p class="lead"><b>FECHA DE ENTREGA:</b> '.$value['fecha_entrega'].'</p>'
             . '<table style="width:100%" id="t01">'

@@ -35,7 +35,9 @@ class CatalogoController extends Controller
             unset($productos[$i]->tipo_producto); 
             unset($productos[$i]->tamanio); 
         }
-        $data = collect(["clientes" => $clientes, "productos" => $productos]);
+        $direcciones = new TtDireccionPedidoController();
+        $direcciones = $direcciones->index();
+        $data = collect(["clientes" => $clientes, "productos" => $productos, "direcciones" => $direcciones]);
         return response()->json($data);
     }
 }
