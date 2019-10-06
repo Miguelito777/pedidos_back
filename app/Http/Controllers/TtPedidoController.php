@@ -19,7 +19,37 @@ class TtPedidoController extends Controller
      */
     public function index()
     {
-        return response()->json(TtPedido::with('cliente','detPedido')->where('id_estado',1)->get());
+        $pedidos = TtPedido::with('cliente','detPedido', 'direccion')->where('id_estado',1)->orderBy('id', 'DESC')->get();
+        foreach( $pedidos as $pedido ) {
+            $pedido->nombre_cliente = $pedido->cliente->cliente;
+            /*echo $order->id;
+            echo $order->customer_id;
+            echo $order->order_total;
+            for( $order->orderDetails as $orderDetails ) {
+                echo $orderDetails->product_name;
+                echo $orderDetails->product_id;
+                echo $orderDetails->quantity;
+                echo $orderDetails->price;
+            }*/
+        }
+        return response()->json($pedidos);
+        //return response()->json(TtPedido::with('cliente','detPedido', 'direccion')->where('id_estado',1)->orderBy('id', 'DESC')->get());
+    }
+    public function pedidosVentas()
+    {
+        $pedidos = TtPedido::with('cliente','detPedido', 'direccion')->where('id_estado',1)->orderBy('id', 'DESC')->get();
+        foreach( $pedidos as $pedido ) {
+            $pedido->nombre_cliente = $pedido->cliente->cliente;
+            $pedido->direccion_entrega = $pedido->direccion->direccion_pedido;
+            $pedido->total_pedido = 0;
+            $detPedido=TtDetPedido::where([['id_pedido','=',$pedido->id]])->get();
+            foreach( $detPedido as $det_pedido ) {
+                $det_pedido->subtotal = $det_pedido->cantidad * $det_pedido->precio;
+                $pedido->total_pedido = $pedido->total_pedido + $det_pedido->subtotal;
+            }
+            $pedido->saldo = $pedido->total_pedido - $pedido->anticipo;
+        }
+        return response()->json($pedidos);
     }
     /**
      * Show the form for creating a new resource.
@@ -83,7 +113,7 @@ class TtPedidoController extends Controller
     public function pedidoPDF($id){
         $dompdf = new Dompdf();
         //$detPedido;
-        $pedido=TtPedido::with('cliente','detPedido')->where([['id_estado','=',1],['id','=',$id]])->get();
+        $pedido=TtPedido::with('cliente','detPedido', 'direccion')->where([['id_estado','=',1],['id','=',$id]])->get();
         //echo print_r($pedido);
         foreach($pedido as $key => $value){
             $detPedido=TtDetPedido::where([['id_pedido','=',$value['id']]])->get();
@@ -91,17 +121,17 @@ class TtPedidoController extends Controller
             . '<p class="lead" style="text-align:center;"><b>PANADERIA Y PASTELERIA CAPRICE</b><br><b>Tel. 77663236</b> <br> '
             . '<b>Correo: pypcaprice28@gmail.com</b> <br> '
             . '<br> CONSTANCIA DE PEDIDO </p> <br>'
-            . '<p class="lead"><b>NO. DE PEDIDO:</b> '.$value['id'].'</p>'
-            . '<p class="lead"><b>FECHA DE PEDIDO:</b> '.$value['created_at'].'</p>'
-            . '<p class="lead"><b>CLIENTE:</b> '.$value['cliente']->cliente.'</p>'
-            . '<p class="lead"><b>FECHA DE ENTREGA:</b> '.$value['fecha_entrega'].'</p>'
+            . '<p class="lead"><b>NO. DE PEDIDO:</b> '.$value['id'].', <b>FECHA: </b>'.date("d/m/Y", strtotime($value['created_at'])).'</p>'
+            . '<p class="lead"><b>CLIENTE:</b> '.$value['cliente']->cliente.', <b>TEL. </b>'.$value['cliente']->telefono.'</p>'
+            . '<p class="lead"><b>DIRECCION DE ENTREGA: </b> '.$value['direccion']->direccion_pedido.'</p>'
+            . '<p class="lead"><b>FECHA DE ENTREGA:</b> '.date("d/m/Y", strtotime($value['fecha_entrega'])).', <b>HORA: </b>'.$value['hora_entrega'].'</p><br>'
             . '<table style="width:100%" id="t01">'
-            . '<tr><th>Cantidad</th><th>Producto</th><th>Precio</th><th>Sub total</th></tr>';           
+            . '<tr><th>Cantidad</th><th>Producto</th><th>Observaciones o leyenda</th><th>Precio</th><th>Sub total</th></tr>';           
             $htmlBody='';
             foreach($detPedido as $keyTwo => $valueTwo){
                 $subTotal = $valueTwo['cantidad'] * $valueTwo['precio'];
                 $htmlBody .= ''
-                .'<tr><td>'.$valueTwo['cantidad'].'</td><td>'.$valueTwo['det_pedido'].'</td><td>'.$valueTwo['precio'].'</td><td>'.$subTotal.'</td></tr>';
+                .'<tr><td>'.$valueTwo['cantidad'].'</td><td>'.$valueTwo['det_pedido'].'</td><td>'.$valueTwo['observaciones'].'</td><td>'.$valueTwo['precio'].'</td><td>'.$subTotal.'</td></tr>';
             }
             $htmlFooter = ''
             .'</table>'

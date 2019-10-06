@@ -27,6 +27,10 @@ class TtPedido extends Model
     {
         return $this->hasOne('App\TcCliente','id','id_cliente');
     }
+    public function direccion()
+    {
+        return $this->hasOne('App\TtDireccionPedido','id','id_direccion_pedido');
+    }
     protected $hidden = [
         'created_at',
         'updated_at',
