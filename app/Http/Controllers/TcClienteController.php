@@ -23,9 +23,10 @@ class TcClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $element = TcCliente::create($request->all());
+        return response()->json($element);
     }
 
     /**

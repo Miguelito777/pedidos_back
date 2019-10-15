@@ -9,7 +9,15 @@ class TcCliente extends Model
     //
     protected $table = "TC_CLIENTE";
     protected $fillable = [
-        'cliente'
+        'cliente',
+        'correo',
+        'telefono',
+        'dpi',
+        'nit',
+        'observaciones',
+        'id_estado',
+        'id_usuario_crea',
+        'id_usuario_modifica'
     ];
         /**
      * The attributes excluded from the model's JSON form.

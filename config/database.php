@@ -32,8 +32,22 @@ return [
     */
 
     'connections' => [
-
-        /*'sqlite' => [
+        /*****************************DESARROLLO**************************************/
+        // 'pgsql' => [
+        //     'driver' => 'pgsql',
+        //     'host' => env('DB_HOST', 'localhost'),
+        //     'port' => env('DB_PORT', 5432),
+        //     'database' => env('DB_DATABASE', 'PEDIDOS'),
+        //     'username' => env('DB_USERNAME', 'postgres'),
+        //     'password' => env('DB_PASSWORD', 'Jesus8+'),
+        //     'charset' => env('DB_CHARSET', 'utf8'),
+        //     'prefix' => env('DB_PREFIX', ''),
+        //     'schema' => env('DB_SCHEMA', 'public'),
+        //     'sslmode' => env('DB_SSL_MODE', 'prefer'),
+        // ]
+        
+        /*,
+        'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => env('DB_PREFIX', ''),
@@ -55,19 +69,6 @@ return [
             'timezone' => env('DB_TIMEZONE', '+00:00'),
         ],
 
-        */'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', 'ec2-174-129-227-128.compute-1.amazonaws.com'),
-            'port' => env('DB_PORT', 5432),
-            'database' => env('DB_DATABASE', 'd9j78ksvl2700a'),
-            'username' => env('DB_USERNAME', 'imqgkcuxvqnskl'),
-            'password' => env('DB_PASSWORD', '28be86e3c5ec7c77dba7f46481776fea48e6c0c524648bd9ab34fbcf503cde9e'),
-            'charset' => env('DB_CHARSET', 'utf8'),
-            'prefix' => env('DB_PREFIX', ''),
-            'schema' => env('DB_SCHEMA', 'public'),
-            'sslmode' => env('DB_SSL_MODE', 'prefer'),
-        ]/*,
-
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', 'localhost'),
@@ -78,6 +79,22 @@ return [
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => env('DB_PREFIX', ''),
         ],*/
+
+
+
+        /*****************************PRUEBAS**************************************/
+        'pgsql' => [
+            'driver' => 'pgsql',
+            'host' => env('DB_HOST', 'ec2-174-129-227-128.compute-1.amazonaws.com'),
+            'port' => env('DB_PORT', 5432),
+            'database' => env('DB_DATABASE', 'd9j78ksvl2700a'),
+            'username' => env('DB_USERNAME', 'imqgkcuxvqnskl'),
+            'password' => env('DB_PASSWORD', '28be86e3c5ec7c77dba7f46481776fea48e6c0c524648bd9ab34fbcf503cde9e'),
+            'charset' => env('DB_CHARSET', 'utf8'),
+            'prefix' => env('DB_PREFIX', ''),
+            'schema' => env('DB_SCHEMA', 'public'),
+            'sslmode' => env('DB_SSL_MODE', 'prefer'),
+        ]
     ],
 
     /*

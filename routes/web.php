@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,17 +9,16 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-
 $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
+
     //TC_CLIENTES
     $router->group(['prefix' => 'clientes'], function () use ($router) {
         $router->get('',  ['uses' => 'TcClienteController@index']);
+        $router->post('',  ['uses' => 'TcClienteController@create']);
     });
-
 
     //TC_PRODUCTO
     $router->group(['prefix' => 'productos'], function () use ($router) {
@@ -30,6 +28,7 @@ $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
     //TC_PRODUCTO
     $router->group(['prefix' => 'catalogo'], function () use ($router) {
         $router->get('',  ['uses' => 'CatalogoController@index']);
+        $router->get('clientes',  ['uses' => 'TcClienteController@index']);
     });
 
         //TT_PEDIDO
