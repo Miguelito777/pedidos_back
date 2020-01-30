@@ -13,7 +13,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
-
+    $router->post('register', 'AuthController@register');
+    $router->post('login', 'AuthController@login');
     //TC_CLIENTES
     $router->group(['prefix' => 'clientes'], function () use ($router) {
         $router->get('',  ['uses' => 'TcClienteController@index']);
