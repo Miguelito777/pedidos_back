@@ -10,7 +10,8 @@
         "dompdf/dompdf": "^0.8.3",
         "flipbox/lumen-generator": "^5.6",
         "laravel/lumen-framework": "5.8.*",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "dev-develop",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",
