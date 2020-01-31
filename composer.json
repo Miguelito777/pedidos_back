@@ -6,12 +6,13 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "ext-mbstring": "*",
+        "barryvdh/laravel-dompdf": "^0.8.5",
         "doctrine/dbal": "^2.9",
         "dompdf/dompdf": "^0.8.3",
         "flipbox/lumen-generator": "^5.6",
         "laravel/lumen-framework": "5.8.*",
-        "tymon/jwt-auth": "dev-develop",
-        "ext-mbstring": "*" 
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

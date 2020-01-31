@@ -26,7 +26,7 @@ $app = new Laravel\Lumen\Application(
  $app->withEloquent();
 
  $app->configure('database');
-
+ $app->configure('dompdf');
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -88,6 +88,8 @@ $app->routeMiddleware([
 // $app->register(App\Providers\AppServiceProvider::class);
  $app->register(App\Providers\AuthServiceProvider::class);
  $app->register(\Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+ $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
+ 
 // $app->register(App\Providers\EventServiceProvider::class);
 // $app->register(App\Providers\RouteServiceProvider::class); 
 

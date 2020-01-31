@@ -106,19 +106,10 @@ class TtPedidoController extends Controller
     }
 
     public function testPDF(){
-        $dompdf = new Dompdf();
-        
-        $html = '<html>';
-        $htmlBody = '<p>Hola mundo</p>';
-        $htmlFooter = '</html>';
-        $allHtml = $html.$htmlBody.$htmlFooter;
-        $dompdf->loadHtml($allHtml);
-        $dompdf->setPaper('letter', 'portrait');
-        $dompdf->render();
-        $dompdf->stream('myDocument',[
-            'compress' => 1,
-            'Attachment' => 0
-        ]);
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+        //return "Hola mundito";
     } 
         /**
      * Display the specified resource.
