@@ -38,6 +38,7 @@ $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
             $router->get('',  ['uses' => 'TtPedidoController@index']);
             $router->get('ventas',  ['uses' => 'TtPedidoController@pedidosVentas']);
             $router->get('pedidoPDF/{id}',  ['uses' => 'TtPedidoController@pedidoPDF']);
+            $router->get('testPDF',  ['uses' => 'TtPedidoController@testPDF']);
         });
 
         //TT_DIRECCION_PEDIDO
