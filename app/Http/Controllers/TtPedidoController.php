@@ -118,12 +118,14 @@ class TtPedidoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function pedidoPDF($id){
-        $dompdf = new Dompdf();
+        $pedido='Pedido no.: ';
+        $dompdf = app('dompdf.wrapper');
         //$detPedido;
         $pedido=TtPedido::with('cliente','detPedido', 'direccion')->where([['id_estado','=',1],['id','=',$id]])->get();
         //echo print_r($pedido);
         foreach($pedido as $key => $value){
             $detPedido=TtDetPedido::where([['id_pedido','=',$value['id']]])->get();
+            
             $html = '<html><head><style>table, th, td {border: 1px solid black; border-collapse: collapse;} table#t01 tr:nth-child(even) {background-color: #eee;}table#t01 tr:nth-child(odd) {background-color: #fff;}table#t01 th {background-color: #02370D;color: white;}</style></head><body>'
             . '<p class="lead" style="text-align:center;"><b>PANADERIA Y PASTELERIA CAPRICE</b><br><b>Tel. 77663236</b> <br> '
             . '<b>Correo: pypcaprice28@gmail.com</b> <br> '
@@ -148,8 +150,8 @@ class TtPedidoController extends Controller
 
         $dompdf->loadHtml($html);
         $dompdf->setPaper('letter', 'portrait');
-        $dompdf->render();
-        $dompdf->stream('myDocument',[
+        //$dompdf->render();
+        return $dompdf->stream('Pedido numero '.$id,[
             'compress' => 1,
             'Attachment' => 0
         ]);
