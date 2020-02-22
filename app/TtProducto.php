@@ -14,7 +14,9 @@ class TtProducto extends Model
         'id_sabor',
         'id_tipo_producto',
         'id_tamanio',
-        'id_estado'
+        'id_estado',
+        'id_usuario_crea',
+        'id_usuario_modifica'
     ];
     public function sabor(){
         return $this->hasOne('App\TcSabor','id','id_sabor');
@@ -34,9 +36,6 @@ class TtProducto extends Model
         'created_at',
         'updated_at',
         'id_usuario_crea',
-        'id_usuario_modifica',
-        'id_sabor',
-        'id_tipo_producto',
-        'id_tamanio'
+        'id_usuario_modifica'
     ];
 }

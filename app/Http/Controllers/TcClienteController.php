@@ -29,6 +29,7 @@ class TcClienteController extends Controller
         return response()->json($element);
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -72,6 +73,11 @@ class TcClienteController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $cliente = TcCliente::findOrFail($id);
+        $cliente->update($request->all());
+
+        return response()->json($cliente, 200);
+
     }
 
     /**

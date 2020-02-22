@@ -70,9 +70,12 @@ class TtDireccionPedidoController extends Controller
      * @param  \App\TtDireccionPedido  $ttDireccionPedido
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TtDireccionPedido $ttDireccionPedido)
+
+    public function update(Request $request, $id)
     {
-        //
+        $direccion = TtDireccionPedido::findOrFail($id);
+        $direccion->update($request->all());
+        return response()->json($direccion, 200);
     }
 
     /**

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Mail;
+use App\TestMail;
 use Illuminate\Http\Request;
 use  App\User;
 
@@ -65,4 +66,38 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    // public function sendMail(Request $request)
+    // {
+    //     Mail::to('initwebapps@gmail.com')->send(new MyEmail());
+    //     echo "Basic Email Sent. Check your inbox.";
+    // }
+    /**
+     * Send mail function
+     *
+     */
+    public function sendMail()
+    {
+        try {
+            Mail::to('menchuxoyon@gmail.com')
+    		->send(new TestMail());
+          } catch(Exception $e) {
+          
+            // explicitly report an exception
+          
+            // in Laravel < 5.5
+            app(\App\Exceptions\Handler::class)->report($e);
+                                                                                
+            // since Laravel 5.5 is available new helper
+            report($e);                                          
+            
+          }
+    }
+
+    
 }

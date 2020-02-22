@@ -15,20 +15,37 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
     $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
+
+    $router->post('testSendMails', 'AuthController@sendMail');
     //TC_CLIENTES
     $router->group(['prefix' => 'clientes'], function () use ($router) {
         $router->get('',  ['uses' => 'TcClienteController@index']);
         $router->post('',  ['uses' => 'TcClienteController@create']);
+        $router->put('{id}',  ['uses' => 'TcClienteController@update']);
+        
     });
 
     //TC_PRODUCTO
     $router->group(['prefix' => 'productos'], function () use ($router) {
         $router->get('',  ['uses' => 'TtProductoController@index']);
+        $router->post('',  ['uses' => 'TtProductoController@create']); 
+        $router->put('{id}',  ['uses' => 'TtProductoController@update']);
+
+
     });
 
-    //TC_PRODUCTO
+    //CATALOGO
     $router->group(['prefix' => 'catalogo'], function () use ($router) {
         $router->get('',  ['uses' => 'CatalogoController@index']);
+        $router->get('sabores',  ['uses' => 'CatalogoController@getSabores']);
+        $router->post('sabor',  ['uses' => 'CatalogoController@setSabor']); 
+        $router->post('tamanio',  ['uses' => 'CatalogoController@setTamanio']);
+        $router->post('tipoProducto',  ['uses' => 'CatalogoController@setTipoProducto']); 
+        $router->put('sabor/{id}',  ['uses' => 'CatalogoController@updateSabor']); 
+        $router->put('tamanio/{id}',  ['uses' => 'CatalogoController@updateTamanio']);
+        $router->put('tipoProducto/{id}',  ['uses' => 'CatalogoController@updateTcTipoProducto']); 
+        $router->get('tamanios',  ['uses' => 'CatalogoController@getTamanios']);
+        $router->get('tipoProducto',  ['uses' => 'CatalogoController@getTipoProducto']);
         $router->get('clientes',  ['uses' => 'TcClienteController@index']);
     });
 
@@ -45,6 +62,7 @@ $router->group(['prefix' => 'PEDIDOS'], function () use ($router) {
         $router->group(['prefix' => 'direccion'], function () use ($router) {
             $router->post('',  ['uses' => 'TtDireccionPedidoController@create']);
             $router->get('',  ['uses' => 'TtDireccionPedidoController@index']);
+            $router->put('{id}',  ['uses' => 'TtDireccionPedidoController@update']);
             //$router->get('pedidoPDF/{id}',  ['uses' => 'TtPedidoController@pedidoPDF']);
         });
 });

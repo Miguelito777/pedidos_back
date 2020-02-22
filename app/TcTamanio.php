@@ -14,7 +14,11 @@ class TcTamanio extends Model
      * @var array
      */
     protected $fillable = [
-        'tamanio'
+        'tamanio',
+        'id_estado',
+        'id_usuario_crea',
+        'id_usuario_modifica',
+        'observaciones'
     ];
     //
         /**
@@ -24,8 +28,7 @@ class TcTamanio extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at',
-        'id_usuario_crea',
-        'id_usuario_modifica'
+        'updated_at'
+        
     ];
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\TtProducto;
+use App\TcTamanio;
+use App\TcTipoProducto;
+use App\TcSabor;
 use Illuminate\Http\Request;
 
 class TtProductoController extends Controller
@@ -13,7 +16,10 @@ class TtProductoController extends Controller
      */
     public function index()
     {
-        $producto = TtProducto::with('sabor', 'tipo_producto', 'tamanio')->where('id','=',1)->get();
+        $producto = TtProducto::with('sabor', 'tipo_producto', 'tamanio')->where('id_estado','=',1)->get();
+        foreach($producto as $value){
+            $value->producto = $value->tipo_producto->tipo_producto.' '.$value->tamanio->tamanio.' '.$value->sabor->sabor;
+        }
         return response()->json($producto);
     }
 
@@ -22,9 +28,10 @@ class TtProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $element = TtProducto::create($request->all());
+        return response()->json($element);    
     }
 
     /**
@@ -69,9 +76,11 @@ class TtProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = TtProducto::findOrFail($id);
+        $item->update($request->all());
+        return response()->json($item, 200);
     }
-
+ 
     /**
      * Remove the specified resource from storage.
      *

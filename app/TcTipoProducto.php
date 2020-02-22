@@ -14,7 +14,11 @@ class TcTipoProducto extends Model
      * @var array
      */
     protected $fillable = [
-        'tipo_producto'
+        'tipo_producto',
+        'id_estado',
+        'id_usuario_crea',
+        'id_usuario_modifica',
+        'observaciones'
     ];
     //
         /**
@@ -24,8 +28,6 @@ class TcTipoProducto extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at',
-        'id_usuario_crea',
-        'id_usuario_modifica'
+        'updated_at'
     ];
 }

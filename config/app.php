@@ -21,16 +21,10 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
- 
+// $app->withFacades();
 
- $app->withEloquent();
+// $app->withEloquent();
 
- $app->configure('database');
- $app->configure('dompdf');
- $app->configure('mail');
-//  $app->alias('mailer', Illuminate\Mail\Mailer::class);
-//  $app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
-//  $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -51,7 +45,6 @@ $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
 );
-$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -63,9 +56,7 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 | route or middleware that'll be assigned to some specific routes.
 |
 */
-$app->middleware([
-    App\Http\Middleware\CorsMiddleware::class
- ]);
+
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
@@ -73,10 +64,6 @@ $app->middleware([
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
-
-$app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
-]);
 
 /*
 |--------------------------------------------------------------------------
@@ -89,15 +76,9 @@ $app->routeMiddleware([
 |
 */
 
-     $app->register(App\Providers\AppServiceProvider::class);
-     $app->withFacades();
-
- $app->register(App\Providers\AuthServiceProvider::class);
- $app->register(\Tymon\JWTAuth\Providers\LumenServiceProvider::class);
- $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
- 
+// $app->register(App\Providers\AppServiceProvider::class);
+// $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-// $app->register(App\Providers\RouteServiceProvider::class); 
 
 /*
 |--------------------------------------------------------------------------
