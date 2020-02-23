@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\TtPedido;
+use App\TtProducto;
 use App\TtDetPedido;
 use App\TtDireccionPedido;
 use Illuminate\Http\Request;
@@ -125,7 +126,12 @@ class TtPedidoController extends Controller
         //echo print_r($pedido);
         foreach($pedido as $key => $value){
             $detPedido=TtDetPedido::where([['id_pedido','=',$value['id']]])->get();
-            
+            $total=0;
+            foreach($detPedido as $keyTwo => $valueTwo){
+                $subTotal = $valueTwo['cantidad'] * $valueTwo['precio'];
+                $total = $total+$subTotal;
+            }
+            $saldo = $total - $value['anticipo'];
             $html = '<html><head><style>table, th, td {border: 1px solid black; border-collapse: collapse;} table#t01 tr:nth-child(even) {background-color: #eee;}table#t01 tr:nth-child(odd) {background-color: #fff;}table#t01 th {background-color: #02370D;color: white;}</style></head><body>'
             . '<p class="lead" style="text-align:center;"><b>PANADERIA Y PASTELERIA CAPRICE</b><br><b>Tel. 77663236</b> <br> '
             . '<b>Correo: pypcaprice28@gmail.com</b> <br> '
@@ -133,14 +139,21 @@ class TtPedidoController extends Controller
             . '<p class="lead"><b>NO. DE PEDIDO:</b> '.$value['id'].', <b>FECHA: </b>'.date("d/m/Y", strtotime($value['created_at'])).'</p>'
             . '<p class="lead"><b>CLIENTE:</b> '.$value['cliente']->cliente.', <b>TEL. </b>'.$value['cliente']->telefono.'</p>'
             . '<p class="lead"><b>DIRECCION DE ENTREGA: </b> '.$value['direccion']->direccion_pedido.'</p>'
-            . '<p class="lead"><b>FECHA DE ENTREGA:</b> '.date("d/m/Y", strtotime($value['fecha_entrega'])).', <b>HORA: </b>'.$value['hora_entrega'].'</p><br>'
+            . '<p class="lead"><b>FECHA DE ENTREGA:</b> '.date("d/m/Y", strtotime($value['fecha_entrega'])).', <b>HORA: </b>'.$value['hora_entrega'].'</p>'
+            . '<p class="lead"><b>TOTAL: </b>Q. '.$total.', <b>ANTICIPO: </b>Q. '.$value['anticipo'].', <b>SALDO: </b>Q. '.$saldo.'</p><br>'
             . '<table style="width:100%" id="t01">'
             . '<tr><th>Cantidad</th><th>Producto</th><th>Observaciones o leyenda</th><th>Precio</th><th>Sub total</th></tr>';           
             $htmlBody='';
+            
             foreach($detPedido as $keyTwo => $valueTwo){
+                // $productos = TtProducto::with('tipo_producto','tamanio', 'sabor')->where([['id_estado','=',1],['id','=',$valueTwo['id_producto']]]);
+                // $desc_producto=$valueTwo['id_producto'];
+                // foreach( $productos as $producto ) {
+                //     $desc_producto = "des of product";
+                // }
                 $subTotal = $valueTwo['cantidad'] * $valueTwo['precio'];
-                $htmlBody .= ''
-                .'<tr><td>'.$valueTwo['cantidad'].'</td><td>'.$valueTwo['det_pedido'].'</td><td>'.$valueTwo['observaciones'].'</td><td>'.$valueTwo['precio'].'</td><td>'.$subTotal.'</td></tr>';
+                    $htmlBody .= ''
+                .'<tr><td>'.$valueTwo['cantidad'].'</td><td>'.$valueTwo['det_pedido'].'</td><td>'.$valueTwo['observaciones'].'</td><td>Q. '.$valueTwo['precio'].'</td><td>Q. '.$subTotal.'</td></tr>';
             }
             $htmlFooter = ''
             .'</table>'
