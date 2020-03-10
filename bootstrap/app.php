@@ -27,7 +27,7 @@ $app = new Laravel\Lumen\Application(
 
  $app->configure('database');
  $app->configure('dompdf');
- $app->configure('mail');
+ //$app->configure('mail');
 //  $app->alias('mailer', Illuminate\Mail\Mailer::class);
 //  $app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
 //  $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
@@ -89,7 +89,7 @@ $app->routeMiddleware([
 |
 */
 
-     $app->register(App\Providers\AppServiceProvider::class);
+     //$app->register(App\Providers\AppServiceProvider::class);
      $app->withFacades();
 
  $app->register(App\Providers\AuthServiceProvider::class);

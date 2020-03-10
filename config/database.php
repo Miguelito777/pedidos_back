@@ -37,7 +37,7 @@ return [
         //     'driver' => 'pgsql',
         //     'host' => env('DB_HOST', 'localhost'),
         //     'port' => env('DB_PORT', 5432),
-        //     'database' => env('DB_DATABASE', 'PEDIDOS'),
+        //     'database' => env('DB_DATABASE', 'punto_venta_desa'),
         //     'username' => env('DB_USERNAME', 'postgres'),
         //     'password' => env('DB_PASSWORD', 'Jesus8+'),
         //     'charset' => env('DB_CHARSET', 'utf8'),
